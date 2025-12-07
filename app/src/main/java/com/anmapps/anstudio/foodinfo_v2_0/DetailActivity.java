@@ -3,10 +3,10 @@ package com.anmapps.anstudio.foodinfo_v2_0;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 

@@ -3,10 +3,13 @@ package com.anmapps.anstudio.foodinfo_v2_0;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 /**
@@ -28,6 +31,7 @@ public class BlankFragmentVitamin extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private WebView webView;
 
     public BlankFragmentVitamin() {
         // Required empty public constructor
@@ -65,6 +69,26 @@ public class BlankFragmentVitamin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank_fragment_vitamin, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        
+        webView = view.findViewById(R.id.webView);
+        
+        // Налаштування WebView
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+        
+        // Встановлення WebViewClient для відкриття посилань всередині WebView
+        webView.setWebViewClient(new WebViewClient());
+        
+        // Завантаження сторінки про вітаміни
+        webView.loadUrl("https://edaplus.info/vitamins.html");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +42,7 @@ public class BlankFragment1 extends Fragment {
     private ArrayList<Categoriya> categoriyasList = new ArrayList<Categoriya>();
     private SearchView search;
     private static final String TAG = "myLogs";
+    private View rootView;
 
     public BlankFragment1() {
         // Required empty public constructor
@@ -72,15 +73,20 @@ public class BlankFragment1 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        displayList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank_fragment1, container, false);
+        rootView = inflater.inflate(R.layout.fragment_blank_fragment1, container, false);
+        return rootView;
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        displayList();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -130,9 +136,9 @@ public class BlankFragment1 extends Fragment {
         loadSomeData();
         Log.d(TAG, "Загружено (loadSomeData) данные ");
         //get reference to the ExpandableListView
-        myList = (ExpandableListView) findViewById (R.id.expandableListView1);
+        myList = (ExpandableListView) rootView.findViewById(R.id.expandableListView1);
         //create the adapter by passing your ArrayList data
-        listAdapter = new MyListAdapter(BlankFragment1.this, categoriyasList);
+        listAdapter = new MyListAdapter(requireActivity(), categoriyasList);
         //attach the adapter to the list
         myList.setAdapter(listAdapter);
 
@@ -142,13 +148,13 @@ public class BlankFragment1 extends Fragment {
 
                 Element elementInfo= (Element)parent.getExpandableListAdapter().getChild(groupPosition,
                         childPosition);
-                Intent intent=new Intent(BlankFragment1.this, DetailActivity.class);
+                Intent intent=new Intent(requireActivity(), DetailActivity.class);
                 intent.putExtra("Title", elementInfo.getName());
                 intent.putExtra("Image_url",elementInfo.getElementImg());
                 intent.putExtra("Details", elementInfo.getElementDetails());
                 startActivity(intent);
 
-                Toast.makeText(BlankFragment1.this, elementInfo.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), elementInfo.getName(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
